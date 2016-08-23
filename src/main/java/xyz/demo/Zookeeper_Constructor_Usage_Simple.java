@@ -15,7 +15,7 @@ public class Zookeeper_Constructor_Usage_Simple implements Watcher {
 
 
     public void process(WatchedEvent watchedEvent) {
-        System.out.println(watchedEvent);
+        System.out.println("warcher event... " + watchedEvent);
         if (Event.KeeperState.SyncConnected == watchedEvent.getState()) {
             connectedSemaphore.countDown();
         }
@@ -23,9 +23,9 @@ public class Zookeeper_Constructor_Usage_Simple implements Watcher {
 
 
     public static void main(String[] args) throws Exception {
-        ZooKeeper zooKeeper = new ZooKeeper("127.0.0.1:2181", 5000, new Zookeeper_Constructor_Usage_Simple());
+        ZooKeeper zooKeeper = new ZooKeeper("127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183", 5000, new Zookeeper_Constructor_Usage_Simple());
 
-        System.out.println(zooKeeper.getState());
+        System.out.println("zk connection... " + zooKeeper.getState());
 
         try {
             connectedSemaphore.await();

@@ -13,7 +13,7 @@ public class Zookeeper_Create_API_Sync_Usage implements Watcher {
     private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
     public static void main(String[] args) throws Exception {
-        ZooKeeper zooKeeper = new ZooKeeper("127.0.0.1:2181", 5000, new Zookeeper_Create_API_Sync_Usage());
+        ZooKeeper zooKeeper = new ZooKeeper("127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183", 5000, new Zookeeper_Create_API_Sync_Usage());
 
         countDownLatch.await();
 
@@ -22,8 +22,6 @@ public class Zookeeper_Create_API_Sync_Usage implements Watcher {
 
         String path2 = zooKeeper.create("/myfirstNode", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
         System.out.println("path2 " + path2);
-
-
     }
 
     public void process(WatchedEvent watchedEvent) {
@@ -31,6 +29,4 @@ public class Zookeeper_Create_API_Sync_Usage implements Watcher {
             countDownLatch.countDown();
         }
     }
-
-
 }
